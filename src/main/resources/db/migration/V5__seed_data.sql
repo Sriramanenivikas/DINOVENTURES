@@ -1,0 +1,82 @@
+-- =============================================
+-- V5: Seed Data — 3 asset types, 5 users, wallets + initial transactions
+-- =============================================
+
+-- =========================================
+-- 1. ASSET TYPES
+-- =========================================
+INSERT INTO asset_types (id, name, symbol, description, decimal_places, is_active)
+VALUES
+    ('a1000000-0000-0000-0000-000000000001', 'Gold Coins',    'GC',  'Primary in-game currency earned through gameplay',          0, TRUE),
+    ('a1000000-0000-0000-0000-000000000002', 'Diamonds',      'DM',  'Premium currency for exclusive items and upgrades',          0, TRUE),
+    ('a1000000-0000-0000-0000-000000000003', 'Reward Points', 'RP',  'Loyalty points earned through daily logins and achievements', 2, TRUE);
+
+-- =========================================
+-- 2. WALLETS (5 users × 3 asset types = 15 wallets)
+-- =========================================
+
+-- User 1: Alice (power player - high balances)
+INSERT INTO wallets (id, user_id, asset_type_id, balance, status)
+VALUES
+    ('aa100000-0000-0000-0000-000000000001', 'bb100000-0000-0000-0000-000000000001', 'a1000000-0000-0000-0000-000000000001', 1000, 'ACTIVE'),
+    ('aa100000-0000-0000-0000-000000000002', 'bb100000-0000-0000-0000-000000000001', 'a1000000-0000-0000-0000-000000000002', 500,  'ACTIVE'),
+    ('aa100000-0000-0000-0000-000000000003', 'bb100000-0000-0000-0000-000000000001', 'a1000000-0000-0000-0000-000000000003', 250.50, 'ACTIVE');
+
+-- User 2: Bob (casual player)
+INSERT INTO wallets (id, user_id, asset_type_id, balance, status)
+VALUES
+    ('aa100000-0000-0000-0000-000000000004', 'bb100000-0000-0000-0000-000000000002', 'a1000000-0000-0000-0000-000000000001', 300, 'ACTIVE'),
+    ('aa100000-0000-0000-0000-000000000005', 'bb100000-0000-0000-0000-000000000002', 'a1000000-0000-0000-0000-000000000002', 50,  'ACTIVE'),
+    ('aa100000-0000-0000-0000-000000000006', 'bb100000-0000-0000-0000-000000000002', 'a1000000-0000-0000-0000-000000000003', 100.00, 'ACTIVE');
+
+-- User 3: Charlie (new player - minimal balances)
+INSERT INTO wallets (id, user_id, asset_type_id, balance, status)
+VALUES
+    ('aa100000-0000-0000-0000-000000000007', 'bb100000-0000-0000-0000-000000000003', 'a1000000-0000-0000-0000-000000000001', 50,  'ACTIVE'),
+    ('aa100000-0000-0000-0000-000000000008', 'bb100000-0000-0000-0000-000000000003', 'a1000000-0000-0000-0000-000000000002', 10,  'ACTIVE'),
+    ('aa100000-0000-0000-0000-000000000009', 'bb100000-0000-0000-0000-000000000003', 'a1000000-0000-0000-0000-000000000003', 25.00, 'ACTIVE');
+
+-- User 4: Diana (frozen account - for testing freeze logic)
+INSERT INTO wallets (id, user_id, asset_type_id, balance, status)
+VALUES
+    ('aa100000-0000-0000-0000-000000000010', 'bb100000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000001', 999, 'FROZEN'),
+    ('aa100000-0000-0000-0000-000000000011', 'bb100000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000002', 200, 'ACTIVE'),
+    ('aa100000-0000-0000-0000-000000000012', 'bb100000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000003', 0.00, 'ACTIVE');
+
+-- User 5: Eve (closed account - for testing closed logic)
+INSERT INTO wallets (id, user_id, asset_type_id, balance, status)
+VALUES
+    ('aa100000-0000-0000-0000-000000000013', 'bb100000-0000-0000-0000-000000000005', 'a1000000-0000-0000-0000-000000000001', 0, 'CLOSED'),
+    ('aa100000-0000-0000-0000-000000000014', 'bb100000-0000-0000-0000-000000000005', 'a1000000-0000-0000-0000-000000000002', 0, 'CLOSED'),
+    ('aa100000-0000-0000-0000-000000000015', 'bb100000-0000-0000-0000-000000000005', 'a1000000-0000-0000-0000-000000000003', 0.00, 'CLOSED');
+
+-- =========================================
+-- 3. INITIAL TRANSACTIONS (audit trail for seeded balances)
+-- =========================================
+
+-- Alice's initial credits
+INSERT INTO transactions (id, wallet_id, type, amount, balance_after, reference_id, description, status)
+VALUES
+    ('cc100000-0000-0000-0000-000000000001', 'aa100000-0000-0000-0000-000000000001', 'CREDIT', 1000,   1000,   'SEED-ALICE-GC',  'Initial seed: Gold Coins',    'SUCCESS'),
+    ('cc100000-0000-0000-0000-000000000002', 'aa100000-0000-0000-0000-000000000002', 'CREDIT', 500,    500,    'SEED-ALICE-DM',  'Initial seed: Diamonds',      'SUCCESS'),
+    ('cc100000-0000-0000-0000-000000000003', 'aa100000-0000-0000-0000-000000000003', 'CREDIT', 250.50, 250.50, 'SEED-ALICE-RP',  'Initial seed: Reward Points', 'SUCCESS');
+
+-- Bob's initial credits
+INSERT INTO transactions (id, wallet_id, type, amount, balance_after, reference_id, description, status)
+VALUES
+    ('cc100000-0000-0000-0000-000000000004', 'aa100000-0000-0000-0000-000000000004', 'CREDIT', 300,    300,    'SEED-BOB-GC',    'Initial seed: Gold Coins',    'SUCCESS'),
+    ('cc100000-0000-0000-0000-000000000005', 'aa100000-0000-0000-0000-000000000005', 'CREDIT', 50,     50,     'SEED-BOB-DM',    'Initial seed: Diamonds',      'SUCCESS'),
+    ('cc100000-0000-0000-0000-000000000006', 'aa100000-0000-0000-0000-000000000006', 'CREDIT', 100.00, 100.00, 'SEED-BOB-RP',    'Initial seed: Reward Points', 'SUCCESS');
+
+-- Charlie's initial credits
+INSERT INTO transactions (id, wallet_id, type, amount, balance_after, reference_id, description, status)
+VALUES
+    ('cc100000-0000-0000-0000-000000000007', 'aa100000-0000-0000-0000-000000000007', 'CREDIT', 50,    50,    'SEED-CHARLIE-GC', 'Initial seed: Gold Coins',    'SUCCESS'),
+    ('cc100000-0000-0000-0000-000000000008', 'aa100000-0000-0000-0000-000000000008', 'CREDIT', 10,    10,    'SEED-CHARLIE-DM', 'Initial seed: Diamonds',      'SUCCESS'),
+    ('cc100000-0000-0000-0000-000000000009', 'aa100000-0000-0000-0000-000000000009', 'CREDIT', 25.00, 25.00, 'SEED-CHARLIE-RP', 'Initial seed: Reward Points', 'SUCCESS');
+
+-- Diana's initial credits (frozen wallet test user)
+INSERT INTO transactions (id, wallet_id, type, amount, balance_after, reference_id, description, status)
+VALUES
+    ('cc100000-0000-0000-0000-000000000010', 'aa100000-0000-0000-0000-000000000010', 'CREDIT', 999,   999,   'SEED-DIANA-GC',   'Initial seed: Gold Coins',    'SUCCESS'),
+    ('cc100000-0000-0000-0000-000000000011', 'aa100000-0000-0000-0000-000000000011', 'CREDIT', 200,   200,   'SEED-DIANA-DM',   'Initial seed: Diamonds',      'SUCCESS');
