@@ -1,19 +1,14 @@
-# Build artifacts
 target/
 *.jar
 
-# IDE
 .idea/
 *.iml
 .vscode/
 
-# OS
 .DS_Store
 Thumbs.db
 
-# Environment (never commit secrets)
 .env
 
-# Logs
 logs/
 *.log

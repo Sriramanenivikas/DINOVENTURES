@@ -32,12 +32,6 @@ public class IdempotencyService {
         this.objectMapper = objectMapper;
     }
 
-    /**
-     * Check if this idempotency key was already processed.
-     * Returns the cached response if found and operation matches.
-     * Throws IdempotencyConflictException if the key was used for a different
-     * operation.
-     */
     public Optional<TransactionResponse> checkIdempotencyKey(String key, String operation) {
         return idempotencyRepository.findByIdempotencyKey(key)
                 .map(record -> {
@@ -55,13 +49,6 @@ public class IdempotencyService {
                 });
     }
 
-    /**
-     * Save the idempotency record within the SAME transaction as the wallet
-     * operation.
-     * This ensures the record commits/rolls back atomically with the wallet changes
-     * —
-     * preventing phantom cached responses for transactions that never completed.
-     */
     @Transactional
     public void saveIdempotencyRecord(String key, String operation, int responseCode, TransactionResponse response) {
         try {

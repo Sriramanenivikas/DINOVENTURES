@@ -1,6 +1,3 @@
--- =============================================
--- V1: Asset Types — defines virtual currencies
--- =============================================
 CREATE TABLE asset_types (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name            VARCHAR(100) NOT NULL,
@@ -14,5 +11,4 @@ CREATE TABLE asset_types (
     CONSTRAINT chk_decimal_places CHECK (decimal_places >= 0 AND decimal_places <= 8)
 );
 
--- Index for listing active asset types
 CREATE INDEX idx_asset_types_active ON asset_types (is_active) WHERE is_active = TRUE;

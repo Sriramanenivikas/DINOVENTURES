@@ -31,12 +31,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, UUID> 
                         @Param("to") LocalDateTime to,
                         Pageable pageable);
 
-        /**
-         * Calculate the ledger-derived balance by summing all successful transactions.
-         * IMPORTANT: when adding new TransactionType values, update this CASE
-         * expression.
-         * Currently: DEBIT and SPEND subtract; CREDIT, TOP_UP, BONUS add.
-         */
         @Query("SELECT COALESCE(SUM(CASE WHEN t.type IN ('DEBIT','SPEND') THEN -t.amount ELSE t.amount END), 0) " +
                         "FROM Transaction t WHERE t.wallet.id = :walletId AND t.status = 'SUCCESS'")
         BigDecimal calculateLedgerBalance(@Param("walletId") UUID walletId);
