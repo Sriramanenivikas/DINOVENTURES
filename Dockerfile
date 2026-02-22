@@ -14,6 +14,7 @@ FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
 RUN addgroup -S wallet && adduser -S wallet -G wallet
+RUN mkdir -p logs && chown wallet:wallet logs
 USER wallet
 
 COPY --from=builder /app/target/wallet-service-1.0.0.jar app.jar
