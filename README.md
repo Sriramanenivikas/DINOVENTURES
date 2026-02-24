@@ -15,21 +15,23 @@ A closed-loop virtual currency management system built for gaming platforms and 
 - [Configuration](#configuration)
 - [Deployment](#deployment)
 
+
 ---
+
 
 ## Technology Stack
 
-| Component | Technology | Rationale |
-|:---|:---|:---|
-| Runtime | Java 21, Spring Boot 3.4.2 | LTS release with virtual threads support and mature ecosystem |
-| Database | PostgreSQL 16 | ACID compliance, CHECK constraints, JSONB, partial indexes |
-| Migrations | Flyway | Version-controlled, repeatable schema evolution |
-| Connection Pool | HikariCP | Industry-standard pool with leak detection |
-| Secrets | AWS Secrets Manager + Spring Cloud AWS 3.x | Credentials loaded before application context starts |
-| Documentation | Springdoc OpenAPI 2.8 | Auto-generated API docs from annotations |
-| Containerization | Docker, Docker Compose | Reproducible builds and deployments |
-
----
+| Component        | Technology                                           | Rationale                                                                 |
+|------------------|-------------------------------------------------------|---------------------------------------------------------------------------|
+| Runtime          | Java 21, Spring Boot 3.4.2                            | LTS release with virtual threads support and mature ecosystem              |
+| Database         | PostgreSQL 16                                        | ACID compliance, CHECK constraints, JSONB, partial indexes                 |
+| Migrations       | Flyway                                               | Version-controlled, repeatable schema evolution                            |
+| Connection Pool  | HikariCP                                             | High-performance pool with leak detection                                  |
+| Secrets          | AWS Secrets Manager + Spring Cloud AWS 3.x            | Secure externalized secrets, loaded during bootstrap phase                 |
+| Documentation    | Springdoc OpenAPI 2.8                                 | Auto-generated OpenAPI specs from controller annotations                   |
+| Containerization | Docker, Docker Compose, GitHub Container Registry     | Reproducible builds, local orchestration, image hosting                    |
+| Cloud / Infra    | AWS EC2, RDS (PostgreSQL), Secrets Manager            | Compute, managed database, and centralized secrets management              |
+| Reverse Proxy & TLS | Nginx, Certbot (Let’s Encrypt), DuckDNS            | HTTPS termination, free TLS certificates, dynamic DNS for public access    |
 
 ## Architecture Overview
 
