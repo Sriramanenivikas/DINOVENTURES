@@ -1,5 +1,7 @@
 # Internal Wallet Service
 
+> **High-performance virtual wallet management backend handling 1000+ req/s** — ACID-compliant double-entry ledger, idempotent transactions, and pessimistic locking built with Spring Boot 3 & PostgreSQL.
+
 A closed-loop virtual currency management system built for gaming platforms and loyalty programs. Handles wallet top-ups, bonuses, and spending with full ACID compliance, concurrency safety, and an auditable double-entry ledger.
 
 ---

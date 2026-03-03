@@ -15,7 +15,7 @@
     <artifactId>wallet-service</artifactId>
     <version>1.0.0</version>
     <name>wallet-service</name>
-    <description>Internal Wallet Service</description>
+    <description>High-performance virtual wallet management backend handling 1000+ req/s — ACID-compliant double-entry ledger, idempotent transactions, and pessimistic locking built with Spring Boot 3 and PostgreSQL</description>
 
     <properties>
         <java.version>21</java.version>
